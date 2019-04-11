@@ -12,7 +12,17 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@transfer-state/shared-ui/header": [
+        "libs/shared-ui/header/src/index.ts"
+      ],
+      "@transfer-state/shared-ui/data-access-environment": [
+        "libs/shared-ui/data-access-environment/src/index.ts"
+      ],
+      "@transfer-state/main/data-access-environment": [
+        "libs/main/data-access-environment/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

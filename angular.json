@@ -2,7 +2,228 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "main": {
+      "root": "apps/main/",
+      "sourceRoot": "apps/main/src",
+      "projectType": "application",
+      "prefix": "transfer-state",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/browser",
+            "index": "apps/main/src/index.html",
+            "main": "apps/main/src/main.ts",
+            "polyfills": "apps/main/src/polyfills.ts",
+            "tsConfig": "apps/main/tsconfig.app.json",
+            "assets": ["apps/main/src/favicon.ico", "apps/main/src/assets"],
+            "styles": ["apps/main/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/main/src/environments/environment.ts",
+                  "with": "apps/main/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "main:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "main:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "main:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/main/src/test.ts",
+            "polyfills": "apps/main/src/polyfills.ts",
+            "tsConfig": "apps/main/tsconfig.spec.json",
+            "karmaConfig": "apps/main/karma.conf.js",
+            "styles": ["apps/main/src/styles.scss"],
+            "scripts": [],
+            "assets": ["apps/main/src/favicon.ico", "apps/main/src/assets"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/main/tsconfig.app.json",
+              "apps/main/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "apps/main/src/main.server.ts",
+            "tsConfig": "apps/main/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {}
+          }
+        }
+      }
+    },
+    "main-e2e": {
+      "root": "apps/main-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/main-e2e/protractor.conf.js",
+            "devServerTarget": "main:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "main:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/main-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "shared-ui-header": {
+      "root": "libs/shared-ui/header",
+      "sourceRoot": "libs/shared-ui/header/src",
+      "projectType": "library",
+      "prefix": "transfer-state",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared-ui/header/tsconfig.lib.json",
+              "libs/shared-ui/header/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/shared-ui/header/jest.config.js",
+            "tsConfig": "libs/shared-ui/header/tsconfig.spec.json",
+            "setupFile": "libs/shared-ui/header/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "shared-ui-data-access-environment": {
+      "root": "libs/shared-ui/data-access-environment",
+      "sourceRoot": "libs/shared-ui/data-access-environment/src",
+      "projectType": "library",
+      "prefix": "transfer-state",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared-ui/data-access-environment/tsconfig.lib.json",
+              "libs/shared-ui/data-access-environment/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/shared-ui/data-access-environment/jest.config.js",
+            "tsConfig": "libs/shared-ui/data-access-environment/tsconfig.spec.json",
+            "setupFile": "libs/shared-ui/data-access-environment/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "main-data-access-environment": {
+      "root": "libs/main/data-access-environment",
+      "sourceRoot": "libs/main/data-access-environment/src",
+      "projectType": "library",
+      "prefix": "transfer-state",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/main/data-access-environment/tsconfig.lib.json",
+              "libs/main/data-access-environment/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/main/data-access-environment/jest.config.js",
+            "tsConfig": "libs/main/data-access-environment/tsconfig.spec.json"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "styleext": "scss"
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
@@ -18,5 +239,6 @@
     "@nrwl/schematics:library": {
       "style": "scss"
     }
-  }
+  },
+  "defaultProject": "main"
 }

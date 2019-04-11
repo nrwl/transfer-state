@@ -7,5 +7,21 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "main": {
+      "tags": []
+    },
+    "main-e2e": {
+      "tags": []
+    },
+    "shared-ui-header": {
+      "tags": ["type:ui"]
+    },
+    "shared-ui-data-access-environment": {
+      "tags": ["type:data-access"]
+    },
+    "main-data-access-environment": {
+      "tags": ["type:data-access", "scope:main"]
+    }
+  }
 }
