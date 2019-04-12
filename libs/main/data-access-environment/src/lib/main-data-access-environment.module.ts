@@ -1,9 +1,11 @@
+import { TRANSFER_STATE_KEY } from './transfer-state-key';
+import { ENVIRONMENT } from './environment.token';
 import { NgModule } from '@angular/core';
 import {
   BrowserModule,
-  BrowserTransferStateModule
+  BrowserTransferStateModule,
+  TransferState
 } from '@angular/platform-browser';
-import { EnvironmentTokenService } from './environment-token.service';
 
 @NgModule({
   imports: [
@@ -11,8 +13,19 @@ import { EnvironmentTokenService } from './environment-token.service';
     BrowserTransferStateModule
   ],
   providers: [
-    EnvironmentTokenService,
-    { provide: 'environment', useClass: EnvironmentTokenService }
+    {
+      provide: ENVIRONMENT,
+      useFactory: (transferState: TransferState) => {
+        const env = transferState.get(TRANSFER_STATE_KEY, '');
+
+        if (env === '') {
+          throw new Error('Environment not provided');
+        }
+
+        return JSON.parse(env);
+      },
+      deps: [TransferState]
+    }
   ]
 })
 export class MainDataAccessEnvironmentModule {}
