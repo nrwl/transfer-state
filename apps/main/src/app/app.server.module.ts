@@ -21,6 +21,12 @@ import { TRANSFER_STATE_KEY } from '@transfer-state/main/data-access-environment
 })
 export class AppServerModule {
   constructor(private transferState: TransferState) {
-    this.transferState.set(TRANSFER_STATE_KEY, process.env.API_ENDPOINT);
+    this.transferState.set(
+      TRANSFER_STATE_KEY,
+      JSON.stringify({
+        apiEndpoint: process.env.API_ENDPOINT,
+        num: +process.env.NUM
+      })
+    );
   }
 }

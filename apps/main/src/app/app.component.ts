@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import {
-  Environment,
-  ENVIRONMENT
+  EnvironmentTokenService,
+  ENVIRONMENT,
+  Environment
 } from '@transfer-state/main/data-access-environment';
 
 @Component({
@@ -10,8 +11,10 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title: string = '';
+  title = '';
+
   constructor(@Inject(ENVIRONMENT) private env: Environment) {
+    console.log('----->', this.env);
     this.title = this.env.apiEndpoint;
   }
 }
